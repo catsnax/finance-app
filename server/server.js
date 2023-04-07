@@ -16,6 +16,10 @@ app.get('/api', (req, res) =>{
     res.send(jsonData);
 })
 
+app.post('/api', (req, res) => {
+    console.log(req.body);
+})
+
 
 
 
