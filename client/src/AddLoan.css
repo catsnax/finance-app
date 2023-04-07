@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaisei+Opti&display=swap');
+#Home{
+    margin-top: 6rem;
+}
+.sidebarBox{
+    position: fixed;
+    background-color: gray;
+    width: 12rem;
+    height: 50rem;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Kaisei Opti', serif;
+    gap: 3rem;
+}
+
+#Loans{
+    background-color: #001D3D;
+    color: white;
+    height: 3rem;
+    align-items: center;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+    margin-left: 0rem;
+}
+.sideElement{
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    
+}
+
+#main{
+    text-align: center;
+    font-family: 'Kaisei Opti', serif;
+
+}
+
