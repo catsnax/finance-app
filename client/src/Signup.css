@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaisei+Opti&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
+body{
+    margin: 0;
+    background-color: #F2F0F0;
+}
+
+.mainBox{
+    width: 23.5rem;
+    height: 22rem;
+    margin:auto;
+    margin-top: 3rem;
+    border:2px;
+    background-color: white;
+    font-family: 'Kaisei Opti', serif;
+}
+
+#signedIn{
+    position: relative;
+    margin-left: 12rem;
+    font-size: 0.7rem;
+}
+
+.head{
+    font-size: 2rem;
+    text-align: center;
+}
+
+.label{
+    font-size: 0.7rem;
+    font-family: 'Inter', sans-serif;
+    margin: 0.2rem;
+    margin-left: 4.5rem;
+}
+
+.credential{
+    display: block; /* or display: inline-block; */
+    margin: 0 auto;
+    height: 2rem;
+    width: 14rem;
+    background-color: #F4F2F2;
+    border: 0rem;
+    margin-bottom: 1rem;
+}
+
+#suButton{
+    background-color: #19117C;
+    color: white;
+    display: block; /* or display: inline-block; */
+    margin: 0 auto;
+    border: 0rem;
+    height: 1.5rem;
+    width: 7rem;
+    border-radius: 0.4rem;
+    font-family: 'Kaisei Opti', serif;
+    font-size: 0.8rem;
+    text-align: center;
+    padding-bottom: 0.2rem;
+}
