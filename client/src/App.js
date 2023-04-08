@@ -1,10 +1,10 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
-import './Signup.css';
-import './AddLoan.css';
-import Signin from './Signin';
-import Signup from './Signup';
-import AddLoan from './AddLoan';
+
+
+import Signin from './components/Signin';
+import Signup from './components/Signup';
+import AddLoan from './components/AddLoan';
 function App() {
 
   const [user, newUser] = useState();

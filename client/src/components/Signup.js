@@ -1,5 +1,6 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
+import './Signup.css';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
