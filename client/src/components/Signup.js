@@ -40,7 +40,7 @@ const Signup = () => {
                         <input className = "credential" value = {email} onChange={handleInputChangeEmail}></input>
 
                         <p className = "label"> Password</p>
-                        <input className = "credential" value = {password} onChange = {handleInputChangePassword} ></input>
+                        <input type ="password" className = "credential" value = {password} onChange = {handleInputChangePassword} ></input>
 
                         <button id = "suButton"> Sign Up</button>
                     </div>

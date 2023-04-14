@@ -18,12 +18,13 @@ mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 app.use(express.json())
 
 app.get("/", (req, res) =>{
+    const d = new Date("2021-03-25");
     const loan = new Loan({
-        name: "Wow",
+        name: "Next",
         totalLoan: 30000,
         interestRate: 0.09,
         nextPay: 500,
-        payDate: "09/04/2023",
+        payDate: d,
     });
 
     loan.save()
