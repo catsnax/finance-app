@@ -5,11 +5,13 @@ import header from './AddLoan.module.css';
 const AddLoan = () => {
     const [name, setName] = useState('');
     const [amount, setAmount] = useState('');
-    const [interest, setInterest] = useState('');
+    const [interest, setInterest] = useState('0.05');
     const [date, setDate] = useState('');
+    
 
     const handleSubmit = () =>{
-        const url = '/api';
+        console.log("submitted");
+        const url = '/loan';
         fetch(url, {
             method: 'POST',
             headers: {
@@ -24,9 +26,14 @@ const AddLoan = () => {
         const handleInputChangeName = (event) => {
             setName(event.target.value);
         }
-
         const handleInputChangeAmount = (event) => {
             setAmount(event.target.value);
+        }
+        const handleInputChangeInterest = (event) => {
+            setInterest(event.target.value);
+        }
+        const handleInputChangeDate = (event) => {
+            setDate(event.target.value);
         }
 
 
@@ -46,20 +53,21 @@ const AddLoan = () => {
                 <h1> CREATE LOAN</h1>
                 
                 <form onSubmit={handleSubmit}>
-                    <div className = {header.labels} value = {name} onChange={handleInputChangeName}> Loaner Name </div>
-                    <input/>
+                    <div className = {header.labels} > Loaner Name </div>
+                    <input value = {name} onChange={handleInputChangeName}/>
 
-                    <div className = {header.labels} value = {amount} onChange={handleInputChangeAmount}> Loaned Amount</div>
-                    <input/>
+                    <div className = {header.labels} > Loaned Amount</div>
+                    <input value = {amount} onChange={handleInputChangeAmount}/>
 
-                    <div className = {header.labels}> Interest Rate</div>
-                    <select>
-                        <option> 5%</option>
-                        <option> 6%</option>
+                    <div className = {header.labels} > Interest Rate</div>
+                    <select value = {interest} onChange={handleInputChangeInterest}>
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
                     </select>
                     
                     <div className = {header.labels}> Starting Date</div>
-                    <input id = {header.date} type ="date"/>
+                    <input value = {date} onChange={handleInputChangeDate} id = {header.date} type ="date"/>
 
                     <button id = {header.submit}> Submit Loan</button>
 

@@ -18,18 +18,7 @@ mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 app.use(express.json())
 
 app.get("/", (req, res) =>{
-    const d = new Date("2021-03-25");
-    const loan = new Loan({
-        name: "Next",
-        totalLoan: 30000,
-        interestRate: 0.09,
-        nextPay: 500,
-        payDate: d,
-    });
-
-    loan.save()
-    .then((result) => {console.log(result)})
-    .catch((err) => console.log(err));
+    console.log("hello");
 })
 
 app.get('/api', (req, res) =>{
@@ -40,6 +29,25 @@ app.get('/api', (req, res) =>{
 
 app.post('/api', (req, res) => {
     console.log(req.body);
+})
+
+app.post('/loan', (req, res) =>{
+    console.log(req.body);
+    const loan = new Loan({
+        name: req.body.Name,
+        totalLoan: req.body.Amount,
+        interestRate: parseFloat(req.body.Interest),
+        payDate: req.body.Date
+    })
+
+    loan.save()
+    .then((result) => {
+        console.log(result)
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+
 })
 
 
