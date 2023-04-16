@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kaisei+Opti&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 #Home{
     margin-top: 1rem;
 }
@@ -12,6 +13,13 @@ h1{
     font-family: 'Kaisei Opti', serif;
     font-size: 2rem;
     position: fixed;
+    margin: 0px;
+    
+}
+
+#body{
+    margin-top: -10px;
+    padding-top: 0;
 }
 
 .sidebarBox{
@@ -31,7 +39,8 @@ h1{
 #Loans{
     background-color: #001D3D;
     color: white;
-    height: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     align-items: center;
     padding-left: 1rem;
     display: flex;
@@ -41,6 +50,21 @@ h1{
 .sideElement{
     font-size: 1.2rem;
     margin-left: 1rem;
+    text-decoration: none;
+    color: black;
+}
+
+.sideElement:hover{
+    background-color: #001D3D;
+    height: auto;
+    color: white;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    align-items: center;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+    margin-left: 0rem;
 }
 
 .labels{
@@ -67,7 +91,7 @@ select{
 
 #main{
     text-align: center;
-    font-family: 'Kaisei Opti', serif;
+    font-family: 'Rubik', serif;
 
 }
 
@@ -86,5 +110,10 @@ select{
     height: 2rem;
     width: 8rem;
     font-size: 1rem;
+}
+
+#submit:hover{
+    background-color: #03214182;
+    color: white;
 }
 

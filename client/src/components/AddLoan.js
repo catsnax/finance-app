@@ -40,12 +40,12 @@ const AddLoan = () => {
 
 
     return ( 
-        <div>
+        <div id = {header.body}>
             <div id = {header.FinanceLogo}> FinanceApp</div>
             <div className = {header.sidebarBox}>
-                <div id = "Home" className = {header.sideElement} > Home</div>
-                <div id = "Expenses" className = {header.sideElement}> Expenses</div>
-                <div id = {header.Loans} className = {header.sideElement}> Loans</div>
+                <Link to = "/Signin" className = {header.sideElement}> Home</Link>
+                <Link to = "/Signin" className = {header.sideElement}> View Loans</Link>
+                <div id = {header.Loans} className = {header.sideElement}> Create Loans</div>
                 <div id = "Data" className = {header.sideElement}> Data</div>
             </div>
 
@@ -61,9 +61,9 @@ const AddLoan = () => {
 
                     <div className = {header.labels} > Interest Rate</div>
                     <select value = {interest} onChange={handleInputChangeInterest}>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                        <option value="5%">5%</option>
+                        <option value="6%">6%</option>
+                        <option value="7%">7%</option>
                     </select>
                     
                     <div className = {header.labels}> Starting Date</div>

@@ -22,9 +22,14 @@ app.get("/", (req, res) =>{
 })
 
 app.get('/api', (req, res) =>{
-    const data = {name: 'Aaron', interestRate: 0.09, loanedMoney: 5000};
-    const jsonData = JSON.stringify(data);
-    res.send(jsonData);
+    Loan.find()
+    .then((result) =>{
+        const jsonData = JSON.stringify(result);
+        res.send(jsonData);
+    })
+
+    
+    
 })
 
 app.post('/api', (req, res) => {
@@ -42,7 +47,7 @@ app.post('/loan', (req, res) =>{
 
     loan.save()
     .then((result) => {
-        console.log(result)
+        console.log()
     })
     .catch((err) => {
         console.log(err);
