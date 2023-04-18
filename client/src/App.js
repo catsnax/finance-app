@@ -7,25 +7,27 @@ import ViewLoan from './components/ViewLoan';
 
 function App() {
 
-  const [user, newUser] = useState();
+  const [user, newUser] = useState(null);
 
-  console.log("hello");
+  
+
 
   useEffect(() => {
     fetch('/api')
     .then(res => {return res.json()})
     .then(data => {
       newUser(data);
-    })
+    })  
 
   }, []);
 
   
-  return  <Routes>
+  return ( 
+  <Routes>
     <Route path = "/" element ={<AddLoan/>}/>
-    <Route exact path="/View" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan name="John" {...props} />}/>
-      </Routes>
-  
+    {user && <Route exact path="/View" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan name="John" {...props} />}/>}
+  </Routes>
+  )
 }
 
 export default App;

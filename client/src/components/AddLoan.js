@@ -61,9 +61,9 @@ const AddLoan = () => {
 
                     <div className = {header.labels} > Interest Rate</div>
                     <select value = {interest} onChange={handleInputChangeInterest}>
-                        <option value="5%">5%</option>
-                        <option value="6%">6%</option>
-                        <option value="7%">7%</option>
+                        <option value="0.05">5%</option>
+                        <option value="0.06">6%</option>
+                        <option value="0.07">7%</option>
                     </select>
                     
                     <div className = {header.labels}> Starting Date</div>

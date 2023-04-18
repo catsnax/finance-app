@@ -24,7 +24,24 @@ app.get("/", (req, res) =>{
 app.get('/api', (req, res) =>{
     Loan.find()
     .then((result) =>{
-        const jsonData = JSON.stringify(result);
+        newArray = []
+        for(i = 0; i < result.length; i++){
+            newArray[i] = new Object();
+            newArray[i].name = result[i].name;
+            newArray[i].totalLoan = result[i].totalLoan;
+            newArray[i].interestRate = result[i].interestRate;
+
+            const month = result[i].payDate.getMonth() + 1; // Note that the month index starts at 0, so we need to add 1 to get the correct month
+            const day = result[i].payDate.getDate();
+            const year = result[i].payDate.getFullYear();
+
+            const formattedDate = `${month}-${day}-${year}`;
+
+
+            newArray[i].payDate = formattedDate;
+        }
+
+        const jsonData = JSON.stringify(newArray);
         res.send(jsonData);
     })
 
