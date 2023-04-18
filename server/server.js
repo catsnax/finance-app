@@ -28,15 +28,19 @@ app.get('/api', (req, res) =>{
         for(i = 0; i < result.length; i++){
             newArray[i] = new Object();
             newArray[i].name = result[i].name;
-            newArray[i].totalLoan = result[i].totalLoan;
-            newArray[i].interestRate = result[i].interestRate;
+            newArray[i].totalLoan = `₱${result[i].totalLoan}`;
+            newArray[i].interestRate = `${parseInt(result[i].interestRate * 100)}%`;
+            newArray[i].nextPay = `₱${result[i].interestRate * result[i].totalLoan}`;
 
+            let formattedDate = "";
             const month = result[i].payDate.getMonth() + 1; // Note that the month index starts at 0, so we need to add 1 to get the correct month
             const day = result[i].payDate.getDate();
             const year = result[i].payDate.getFullYear();
 
-            const formattedDate = `${month}-${day}-${year}`;
-
+            if(parseInt(day) < 10 && parseInt(month) < 10) formattedDate = `0${month}-0${day}-${year}`;  
+            else if(parseInt(day) < 10) {formattedDate = `${month}-0${day}-${year}`;}
+            else if(parseInt(month) < 10) {formattedDate = `0${month}-${day}-${year}`;}
+            else{formattedDate = `${month}-${day}-${year}`;}
 
             newArray[i].payDate = formattedDate;
         }

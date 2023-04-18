@@ -47,7 +47,7 @@ const AddLoan = () => {
                 <Link to = "/Signin" className = {header.sideElement}> View Loans</Link>
                 <div id = {header.Loans} className = {header.sideElement}> Create Loans</div>
                 <div id = "Data" className = {header.sideElement}> Data</div>
-            </div>
+        </div>
 
             <div id = {header.main}>
                 <h1> CREATE LOAN</h1>
