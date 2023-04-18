@@ -14,7 +14,9 @@ function ViewLoan(props) {
           <td>{item.totalLoan}</td>
           <td>{item.interestRate}</td>
           <td>{item.payDate}</td>
-          <td> {item.nextPay}</td>
+          <td> {item.nextPayAmount}</td>
+          <td> {item.nextPayDate}</td>
+        
         </tr>
       ));
     
@@ -45,6 +47,9 @@ return (
           <th>Interest Rate</th>
           <th>Starting Date</th>
           <th>Next Pay</th>
+          <th> Next Pay Date
+            
+          </th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>

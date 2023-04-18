@@ -17,6 +17,8 @@ mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 
 app.use(express.json())
 
+
+
 app.get("/", (req, res) =>{
     console.log("hello");
 })
@@ -30,19 +32,19 @@ app.get('/api', (req, res) =>{
             newArray[i].name = result[i].name;
             newArray[i].totalLoan = `₱${result[i].totalLoan}`;
             newArray[i].interestRate = `${parseInt(result[i].interestRate * 100)}%`;
-            newArray[i].nextPay = `₱${result[i].interestRate * result[i].totalLoan}`;
-
-            let formattedDate = "";
+            newArray[i].nextPayAmount = parseInt(result[i].totalLoan * result[i].interestRate);
+            //date formatter
+            
             const month = result[i].payDate.getMonth() + 1; // Note that the month index starts at 0, so we need to add 1 to get the correct month
             const day = result[i].payDate.getDate();
             const year = result[i].payDate.getFullYear();
+            
 
-            if(parseInt(day) < 10 && parseInt(month) < 10) formattedDate = `0${month}-0${day}-${year}`;  
-            else if(parseInt(day) < 10) {formattedDate = `${month}-0${day}-${year}`;}
-            else if(parseInt(month) < 10) {formattedDate = `0${month}-${day}-${year}`;}
-            else{formattedDate = `${month}-${day}-${year}`;}
+            newArray[i].payDate = dateFormatter(day, month, year);;
+            nextPayDate = result[i].nextPayDate;
+            newArray[i].nextPayDate = dateFormatter(nextPayDate.getDate(), nextPayDate.getMonth() + 1 , nextPayDate.getFullYear());
+            
 
-            newArray[i].payDate = formattedDate;
         }
 
         const jsonData = JSON.stringify(newArray);
@@ -63,12 +65,14 @@ app.post('/loan', (req, res) =>{
         name: req.body.Name,
         totalLoan: req.body.Amount,
         interestRate: parseFloat(req.body.Interest),
-        payDate: req.body.Date
+        payDate: req.body.Date,
+        nextPayDate: addDays(req.body.Date, 15),
+        interestAmount: parseFloat(req.body.Interest) * req.body.Amount,
     })
 
     loan.save()
     .then((result) => {
-        console.log()
+        console.log(result);
     })
     .catch((err) => {
         console.log(err);
@@ -78,5 +82,20 @@ app.post('/loan', (req, res) =>{
 
 
 
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
 
+function dateFormatter(day, month, year){
+    let formattedDate = "";
+
+    if(parseInt(day) < 10 && parseInt(month) < 10) formattedDate = `0${month}-0${day}-${year}`;  
+    else if(parseInt(day) < 10) {formattedDate = `${month}-0${day}-${year}`;}
+    else if(parseInt(month) < 10) {formattedDate = `0${month}-${day}-${year}`;}
+    else{formattedDate = `${month}-${day}-${year}`;}
+
+    return formattedDate;
+}
  

@@ -6,7 +6,9 @@ const loanSchema = new Schema({
     totalLoan: Number,
     interestRate: Number,
     nextPay: Number,
-    payDate: Date
+    payDate: Date,
+    nextPayDate: Date,
+    interestAmount: Number,
 
 
 }, {timestamps: true});
