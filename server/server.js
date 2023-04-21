@@ -31,13 +31,6 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-
-
-  
-
-
-
-
 app.get("/", (req, res) =>{
     console.log("hello");
 })
@@ -54,6 +47,7 @@ app.get('/api', (req, res) =>{
             newArray[i].nextPayAmount = `₱${parseInt(result[i].totalLoan * result[i].interestRate)}`;
             //date formatter
             
+            index = result[i].index;
             const month = result[i].payDate.getMonth() + 1; // Note that the month index starts at 0, so we need to add 1 to get the correct month
             const day = result[i].payDate.getDate();
             const year = result[i].payDate.getFullYear();
@@ -76,12 +70,13 @@ app.get('/api', (req, res) =>{
                 });
 
 
-                result[i].nextPayDate = addDays(result[i].nextPayDate, 15);
+                result[i].nextPayDate[index] = addDays(result[i].nextPayDate[index], 15);
+                result[i].index += 1
                 result[i].save()
                 
             }
 
-            nextPayDate = result[i].nextPayDate;
+            nextPayDate = result[i].nextPayDate[0];
             newArray[i].nextPayDate = dateFormatter(nextPayDate.getDate(), nextPayDate.getMonth() + 1 , nextPayDate.getFullYear());
         }
 
@@ -104,8 +99,9 @@ app.post('/loan', (req, res) =>{
         totalLoan: req.body.Amount,
         interestRate: parseFloat(req.body.Interest),
         payDate: req.body.Date,
-        nextPayDate: addDays(req.body.Date, 15),
+        nextPayDate: [addDays(req.body.Date, 15)],
         interestAmount: parseFloat(req.body.Interest) * req.body.Amount,
+        index: 0,
     })
 
     loan.save()

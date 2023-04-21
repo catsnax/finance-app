@@ -7,10 +7,10 @@ const loanSchema = new Schema({
     interestRate: Number,
     nextPay: Number,
     payDate: Date,
-    nextPayDate: Date,
+    nextPayDate: Array,
+    index: Number,
+    nextPayStatus: Array,
     interestAmount: Number,
-
-
 }, {timestamps: true});
 
 const Loan = mongoose.model('Loan', loanSchema);
