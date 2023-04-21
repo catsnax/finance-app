@@ -34,8 +34,8 @@ return (
         <div className = {header.sidebarBox}>
         
             <Link to = "/Signin" className = {header.sideElement}> Home</Link>
-            <Link to = "/Signin" className = {header.sideElement}> View Loans</Link>
-            <div id = {header.Loans} className = {header.sideElement}> Create Loans</div>
+            <div id = {header.view}className = {header.sideElement}> View Loans</div>
+            <Link to = "/" id = {header.Loans} className = {header.sideElement}> Create Loans</Link>
             <div id = "Data" className = {header.sideElement}> Data</div>
         </div>
     <div className = {header.realTable}>

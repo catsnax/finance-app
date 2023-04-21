@@ -1,4 +1,5 @@
 const express = require('express');
+var nodemailer = require('nodemailer');
 const app = express();
 const mongoose = require('mongoose');
 const Loan = require('./models/loan')
@@ -19,6 +20,24 @@ app.use(express.json())
 
 app.use(cors());
 
+
+let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: 'ajjmacias@addu.edu.ph', // your email
+        pass: 'Aaronisreal4' // your email password
+    }
+});
+
+
+
+  
+
+
+
+
 app.get("/", (req, res) =>{
     console.log("hello");
 })
@@ -32,7 +51,7 @@ app.get('/api', (req, res) =>{
             newArray[i].name = result[i].name;
             newArray[i].totalLoan = `₱${result[i].totalLoan}`;
             newArray[i].interestRate = `${parseInt(result[i].interestRate * 100)}%`;
-            newArray[i].nextPayAmount = parseInt(result[i].totalLoan * result[i].interestRate);
+            newArray[i].nextPayAmount = `₱${parseInt(result[i].totalLoan * result[i].interestRate)}`;
             //date formatter
             
             const month = result[i].payDate.getMonth() + 1; // Note that the month index starts at 0, so we need to add 1 to get the correct month
@@ -40,9 +59,33 @@ app.get('/api', (req, res) =>{
             const year = result[i].payDate.getFullYear();
             
 
-            newArray[i].payDate = dateFormatter(day, month, year);;
+            newArray[i].payDate = dateFormatter(day, month, year);
+
+            if(new Date() >= result[i].nextPayDate){
+                let mailOptions = {
+                    from: 'ajjmacias@addu.edu.ph', // sender address
+                    to: 'aaron.justin.macias@gmail.com', // list of receivers
+                    subject: 'Loan Due ✔', // Subject line
+                    text: `${result[i].name}'s interest payment of ${newArray[i].nextPayAmount} is due on ${dateFormatter(result[i].nextPayDate.getDate(), result[i].nextPayDate.getMonth() + 1 , result[i].nextPayDate.getFullYear())} ` // plain text body
+                };
+    
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    console.log('Message sent: %s', info.messageId);
+                });
+
+
+                result[i].nextPayDate = addDays(result[i].nextPayDate, 15);
+
+                
+            }
+
             nextPayDate = result[i].nextPayDate;
             newArray[i].nextPayDate = dateFormatter(nextPayDate.getDate(), nextPayDate.getMonth() + 1 , nextPayDate.getFullYear());
+
+
             
 
         }
