@@ -11,7 +11,7 @@ const AddLoan = () => {
 
     const handleSubmit = () =>{
         console.log("submitted");
-        const url = '/loan';
+        const url = 'http://localhost:3000/loan';
         fetch(url, {
             method: 'POST',
             headers: {
@@ -44,7 +44,7 @@ const AddLoan = () => {
             <div id = {header.FinanceLogo}> FinanceApp</div>
             <div className = {header.sidebarBox}>
                 <Link to = "/Signin" className = {header.sideElement}> Home</Link>
-                <Link to = "/Signin" className = {header.sideElement}> View Loans</Link>
+                <Link to = "/View" className = {header.sideElement}> View Loans</Link>
                 <div id = {header.Loans} className = {header.sideElement}> Create Loans</div>
                 <div id = "Data" className = {header.sideElement}> Data</div>
         </div>

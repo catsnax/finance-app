@@ -2,9 +2,9 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const Loan = require('./models/loan')
+const cors = require('cors');
 
-
-const port = 5000;
+const port = 3000;
 
 const dbURI = "mongodb+srv://aaronjustinmacias:Aaronisreal4@cluster0.fwpywtd.mongodb.net/Finance?retryWrites=true&w=majority"
 
@@ -17,7 +17,7 @@ mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 
 app.use(express.json())
 
-
+app.use(cors());
 
 app.get("/", (req, res) =>{
     console.log("hello");

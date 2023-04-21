@@ -11,21 +11,22 @@ function App() {
 
   
 
-
   useEffect(() => {
-    fetch('/api')
+    fetch('http://localhost:3000/api')
     .then(res => {return res.json()})
     .then(data => {
       newUser(data);
+      console.log(data);
     })  
 
   }, []);
 
+
   
   return ( 
   <Routes>
+    {user && <Route path="/view" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan {...props} />}/>}
     <Route path = "/" element ={<AddLoan/>}/>
-    {user && <Route exact path="/View" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan name="John" {...props} />}/>}
   </Routes>
   )
 }

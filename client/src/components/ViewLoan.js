@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import header from './ViewLoan.module.css';
-import { useTable } from 'react-table';
 import { Link, Route, Routes } from 'react-router-dom';
 
 function ViewLoan(props) {
     
+    console.log("hello");
     const realData = props.prop;
 
 
