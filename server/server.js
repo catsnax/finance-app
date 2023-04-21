@@ -68,7 +68,6 @@ app.get('/api', (req, res) =>{
                     subject: 'Loan Due ✔', // Subject line
                     text: `${result[i].name}'s interest payment of ${newArray[i].nextPayAmount} is due on ${dateFormatter(result[i].nextPayDate.getDate(), result[i].nextPayDate.getMonth() + 1 , result[i].nextPayDate.getFullYear())} ` // plain text body
                 };
-    
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                         return console.log(error);
@@ -78,16 +77,12 @@ app.get('/api', (req, res) =>{
 
 
                 result[i].nextPayDate = addDays(result[i].nextPayDate, 15);
-
+                result[i].save()
                 
             }
 
             nextPayDate = result[i].nextPayDate;
             newArray[i].nextPayDate = dateFormatter(nextPayDate.getDate(), nextPayDate.getMonth() + 1 , nextPayDate.getFullYear());
-
-
-            
-
         }
 
         const jsonData = JSON.stringify(newArray);

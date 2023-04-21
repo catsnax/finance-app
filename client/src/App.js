@@ -27,6 +27,7 @@ function App() {
   <Routes>
     {user && <Route path="/view" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan {...props} />}/>}
     <Route path = "/" element ={<AddLoan/>}/>
+    <Route path = "/Signin" element ={<Signin/>}/>
   </Routes>
   )
 }

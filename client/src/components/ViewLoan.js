@@ -10,6 +10,7 @@ function ViewLoan(props) {
 
     const rows = realData.map(item => (
         <tr key={item.id}>
+          <td> <button> view history</button></td>
           <td>{item.name}</td>
           <td>{item.totalLoan}</td>
           <td>{item.interestRate}</td>
@@ -42,6 +43,7 @@ return (
     <table id = {header.table}>
       <thead>
         <tr className = {header.tableHeader}>
+          <th></th>
           <th>Name</th>
           <th>Total Loan</th>
           <th>Interest Rate</th>
