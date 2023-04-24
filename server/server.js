@@ -41,6 +41,7 @@ app.get('/api', (req, res) =>{
         newArray = []
         for(i = 0; i < result.length; i++){
             newArray[i] = new Object();
+            newArray[i].id = result[i]._id;
             newArray[i].name = result[i].name;
             newArray[i].totalLoan = `₱${result[i].totalLoan}`;
             newArray[i].interestRate = `${parseInt(result[i].interestRate * 100)}%`;
