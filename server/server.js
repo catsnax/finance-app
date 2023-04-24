@@ -32,11 +32,10 @@ let transporter = nodemailer.createTransport({
 });
 
 app.get("/", (req, res) =>{
-    Loan.find();
+
 })
 
 app.get('/api', (req, res) =>{
-    console.log("this is called");
     Loan.find()
     .then((result) =>{
         newArray = []
@@ -79,7 +78,9 @@ app.get('/api', (req, res) =>{
 
                 result[i].nextPayDate.push(addDays(result[i].nextPayDate[index], 15));
                 console.log(result[i].nextPayDate);
+
                 result[i].indexNumber += 1
+                result[i].nextPayStatus.push("Not Paid");
                 result[i].save()   
             }  
         }
@@ -104,6 +105,7 @@ app.post('/loan', (req, res) =>{
         interestRate: parseFloat(req.body.Interest),
         payDate: req.body.Date,
         nextPayDate: [addDays(req.body.Date, 15)],
+        nextPayStatus: ["Not Paid"],
         interestAmount: parseFloat(req.body.Interest) * req.body.Amount,
         indexNumber: 0,
     })
