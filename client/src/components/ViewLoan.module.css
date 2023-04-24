@@ -3,7 +3,7 @@
     text-align: center;
     border: 1px solid;
     margin-left: 16rem;
-    margin-top: 9.5rem;
+    margin-top: 10rem;
     border-collapse: collapse;
 }
 
@@ -45,45 +45,37 @@ h1{
     position: fixed;
     background-color: #f0f0f0;
     font-size: 4rem;
-    width: 11rem;
+    width: 12rem;
     height: 50rem;
     display: flex;
     flex-direction: column;
     font-family: 'Kaisei Opti', serif;
-    gap: 4rem;
-    margin-top: 0rem;
+    gap: 2.5rem;
+    margin-top: -2.5rem;
 }
 
 
 #view{
     background-color: #001D3D;
     color: white;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    align-items: center;
-    padding-left: 1rem;
-    display: flex;
-    align-items: center;
-    margin-left: 0rem;
+    
 }
 .sideElement{
+    width: 11rem;
+    height: 3rem;
     font-size: 1.2rem;
-    margin-left: 1rem;
+    padding-left: 1rem;
+    padding-top: 0.9rem;
     text-decoration: none;
     color: black;
+    
+    
 }
 
 .sideElement:hover{
     background-color: #001D3D;
-    height: auto;
+    height: 3rem;
     color: white;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    align-items: center;
-    padding-left: 1rem;
-    display: flex;
-    align-items: center;
-    margin-left: 0rem;
 }
 
 .labels{

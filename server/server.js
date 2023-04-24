@@ -55,7 +55,7 @@ app.get('/api', (req, res) =>{
 
             newArray[i].payDate = dateFormatter(day, month, year);
 
-            if(new Date() >= result[i].nextPayDate){
+            if(new Date() >= result[i].nextPayDate[index]){
                 let mailOptions = {
                     from: 'ajjmacias@addu.edu.ph', // sender address
                     to: 'aaron.justin.macias@gmail.com', // list of receivers
