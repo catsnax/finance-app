@@ -4,7 +4,6 @@ import { Link, Route, Routes } from 'react-router-dom';
 
 function ViewLoan(props) {
     
-    console.log("hello");
     const realData = props.prop;
 
 
@@ -23,14 +22,7 @@ function ViewLoan(props) {
           <td> {item.payDateArray[0]}</td>
         
         </tr>
-      ));
-    
-
-
-  
-    
-  
-    
+      )); 
 
 return (
     
@@ -65,3 +57,4 @@ return (
   );
 };
 export default ViewLoan;
+

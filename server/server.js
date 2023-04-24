@@ -32,10 +32,11 @@ let transporter = nodemailer.createTransport({
 });
 
 app.get("/", (req, res) =>{
-    console.log("hello");
+    Loan.find();
 })
 
 app.get('/api', (req, res) =>{
+    console.log("this is called");
     Loan.find()
     .then((result) =>{
         newArray = []
@@ -57,11 +58,10 @@ app.get('/api', (req, res) =>{
 
             payDateArray = []
             nextPayDate = result[i].nextPayDate[index];
-            test = dateFormatter(nextPayDate.getDate(), nextPayDate.getMonth() + 1 , nextPayDate.getFullYear());
-            payDateArray.push(test);
+            newVariable = dateFormatter(nextPayDate.getDate(), nextPayDate.getMonth() + 1 , nextPayDate.getFullYear());
+            payDateArray.push(newVariable);
             
             newArray[i].payDateArray = payDateArray;
-
             if(new Date() >= result[i].nextPayDate[index]){
                 let mailOptions = {
                     from: 'ajjmacias@addu.edu.ph', // sender address
@@ -77,7 +77,8 @@ app.get('/api', (req, res) =>{
                 });
 
 
-                result[i].nextPayDate[index] = addDays(result[i].nextPayDate[index], 15);
+                result[i].nextPayDate.push(addDays(result[i].nextPayDate[index], 15));
+                console.log(result[i].nextPayDate);
                 result[i].indexNumber += 1
                 result[i].save()   
             }  
