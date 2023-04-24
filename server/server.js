@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Loan = require('./models/loan')
 const cors = require('cors');
 
-const port = 3000;
+const port = 4000;
 
 const dbURI = "mongodb+srv://aaronjustinmacias:Aaronisreal4@cluster0.fwpywtd.mongodb.net/Finance?retryWrites=true&w=majority"
 
@@ -47,7 +47,7 @@ app.get('/api', (req, res) =>{
             newArray[i].nextPayAmount = `₱${parseInt(result[i].totalLoan * result[i].interestRate)}`;
             //date formatter
             
-            index = result[i].index;
+            index = result[i].indexNumber;
             const month = result[i].payDate.getMonth() + 1; // Note that the month index starts at 0, so we need to add 1 to get the correct month
             const day = result[i].payDate.getDate();
             const year = result[i].payDate.getFullYear();
@@ -55,12 +55,19 @@ app.get('/api', (req, res) =>{
 
             newArray[i].payDate = dateFormatter(day, month, year);
 
+            payDateArray = []
+            nextPayDate = result[i].nextPayDate[index];
+            test = dateFormatter(nextPayDate.getDate(), nextPayDate.getMonth() + 1 , nextPayDate.getFullYear());
+            payDateArray.push(test);
+            
+            newArray[i].payDateArray = payDateArray;
+
             if(new Date() >= result[i].nextPayDate[index]){
                 let mailOptions = {
                     from: 'ajjmacias@addu.edu.ph', // sender address
                     to: 'aaron.justin.macias@gmail.com', // list of receivers
                     subject: 'Loan Due ✔', // Subject line
-                    text: `${result[i].name}'s interest payment of ${newArray[i].nextPayAmount} is due on ${dateFormatter(result[i].nextPayDate.getDate(), result[i].nextPayDate.getMonth() + 1 , result[i].nextPayDate.getFullYear())} ` // plain text body
+                    text: `${result[i].name}'s interest payment of ${newArray[i].nextPayAmount} is due on ${dateFormatter(result[i].nextPayDate[index].getDate(), result[i].nextPayDate[index].getMonth() + 1 , result[i].nextPayDate[index].getFullYear())} ` // plain text body
                 };
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
@@ -71,13 +78,9 @@ app.get('/api', (req, res) =>{
 
 
                 result[i].nextPayDate[index] = addDays(result[i].nextPayDate[index], 15);
-                result[i].index += 1
-                result[i].save()
-                
-            }
-
-            nextPayDate = result[i].nextPayDate[0];
-            newArray[i].nextPayDate = dateFormatter(nextPayDate.getDate(), nextPayDate.getMonth() + 1 , nextPayDate.getFullYear());
+                result[i].indexNumber += 1
+                result[i].save()   
+            }  
         }
 
         const jsonData = JSON.stringify(newArray);
@@ -101,7 +104,7 @@ app.post('/loan', (req, res) =>{
         payDate: req.body.Date,
         nextPayDate: [addDays(req.body.Date, 15)],
         interestAmount: parseFloat(req.body.Interest) * req.body.Amount,
-        index: 0,
+        indexNumber: 0,
     })
 
     loan.save()

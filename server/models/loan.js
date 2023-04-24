@@ -8,7 +8,7 @@ const loanSchema = new Schema({
     nextPay: Number,
     payDate: Date,
     nextPayDate: Array,
-    index: Number,
+    indexNumber: Number,
     nextPayStatus: Array,
     interestAmount: Number,
 }, {timestamps: true});

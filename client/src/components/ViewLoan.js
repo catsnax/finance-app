@@ -20,7 +20,7 @@ function ViewLoan(props) {
           <td>{item.interestRate}</td>
           <td>{item.payDate}</td>
           <td> {item.nextPayAmount}</td>
-          <td> {item.nextPayDate}</td>
+          <td> {item.payDateArray[0]}</td>
         
         </tr>
       ));
