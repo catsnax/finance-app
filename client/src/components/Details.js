@@ -1,10 +1,16 @@
-const detailsLoan = (props) => {
+import {useLocation} from 'react-router-dom';
+
+
+function DetailsLoan(){
+
+    const location = useLocation();
+
     return ( 
-        <div> hello</div>
+        <div> {location.state.name}</div>
 
 
 
      );
 }
  
-export default detailsLoan;
+export default DetailsLoan;

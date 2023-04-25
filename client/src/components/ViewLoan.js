@@ -1,14 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import header from './ViewLoan.module.css';
 import { Link, Route, Routes} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function ViewLoan(props) {
-    
+
+    const navigate = useNavigate();
     const realData = props.prop;
 
 
     const handleClick = (wow) => {
-      console.log(wow);
+      navigate('/Details',{state:{name: wow}});
+    
     }
 
     const rows = realData.map(item => (
