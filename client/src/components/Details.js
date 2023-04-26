@@ -1,32 +1,32 @@
 import {useLocation} from 'react-router-dom';
 import header from './Details.module.css';
 import { Link, Route, Routes} from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
 
 function DetailsLoan(){
 
     const location = useLocation();
-
     let data = location.state.data;
-    console.log(data);
-    let name = data.name;
-    let counter = 0;
+    let statusArray = data.payStatusArray;
     
-    function countAdder(counter){
-      counter++;
-    }
+    const [status, setStatus] = useState();
 
-
-    console.log(data.payDateArray);
-    const rows = data.payDateArray.map(item => (
+    const handleInputChangeStatus = (event) => {
+      setStatus(event.target.value);
+  }
+    
+    const rows = data.payDateArray.map((item, index) => (
         <tr key={item.id}>
           <td>{item}</td>
-          <td> {data.payStatusArray[counter]}</td>
+          <td class = {header.selectBox} > <select id = {header.select} selected = {statusArray[index]} onChange={handleInputChangeStatus}>
+                  <option value="Not Paid">Not Paid</option>
+                  <option value="Paid">Paid</option>
+                </select></td>
           <td> {data.nextPayAmount}</td>
-          <td> {counter}</td>
+          <td> {index}</td>
         </tr>
-        
-    
-      )); 
+      )
+    ); 
 
     return ( 
       <div>
@@ -42,7 +42,7 @@ function DetailsLoan(){
 
         <div className = {header.mainContent}>
           <div className = {header.headers}>
-            <div> Name: {name} </div>
+            <div> Name: {data.name} </div>
             <div> Loaned Money: {data.totalLoan} </div>
             <div> Interest Rate: {data.interestRate} </div>
             <div> Starting Date: {data.payDate}</div>
@@ -50,18 +50,20 @@ function DetailsLoan(){
 
           <button id = {header.finishButton}> Finish Loan</button>
 
+
+
           <div className = {header.realTable}>
-    <table id = {header.table}>
-      <thead>
-        <tr className = {header.tableHeader}>
-          <th>Pay Date</th>
-          <th>Pay Status</th>
-          <th>Pay Amount</th>
-          <th>On Time</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+        <table id = {header.table}>
+          <thead>
+            <tr className = {header.tableHeader}>
+              <th>Pay Date</th>
+              <th>Pay Status</th>
+              <th>Pay Amount</th>
+              <th>On Time</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
     </div>
 
         </div>
