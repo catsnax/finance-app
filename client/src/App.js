@@ -13,11 +13,10 @@ function App() {
   
 
   useEffect(() => {
-    fetch('http://localhost:4000/api')
+    fetch('http://localhost:3500/api')
     .then(res => {return res.json()})
     .then(data => {
       newUser(data);
-      console.log(data);
     })  
 
   }, []);

@@ -10,13 +10,13 @@ function ViewLoan(props) {
 
 
     const handleClick = (wow) => {
-      navigate('/Details',{state:{name: wow}});
+      navigate('/Details',{state:{data: wow}});
     
     }
 
     const rows = realData.map(item => (
         <tr key={item.id}>
-          <td> <button onClick =  {() => {handleClick(item.name)}}> view history</button></td>
+          <td> <button onClick =  {() => {handleClick(item)}}> view history</button></td>
           <td>{item.name}</td>
           <td>{item.totalLoan}</td>
           <td>{item.interestRate}</td>

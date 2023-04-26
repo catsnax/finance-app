@@ -11,7 +11,7 @@ const AddLoan = () => {
 
     const handleSubmit = () =>{
         console.log("submitted");
-        const url = 'http://localhost:4000/loan';
+        const url = 'http://localhost:3500/loan';
         fetch(url, {
             method: 'POST',
             headers: {

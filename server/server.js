@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Loan = require('./models/loan')
 const cors = require('cors');
 
-const port = 4000;
+const port = 3500;
 
 const dbURI = "mongodb+srv://aaronjustinmacias:Aaronisreal4@cluster0.fwpywtd.mongodb.net/Finance?retryWrites=true&w=majority"
 
@@ -47,22 +47,27 @@ app.get('/api', (req, res) =>{
             newArray[i].interestRate = `${parseInt(result[i].interestRate * 100)}%`;
             newArray[i].nextPayAmount = `₱${parseInt(result[i].totalLoan * result[i].interestRate)}`;
             //date formatter
-            
+        
             index = result[i].indexNumber;
+
             const month = result[i].payDate.getMonth() + 1; // Note that the month index starts at 0, so we need to add 1 to get the correct month
             const day = result[i].payDate.getDate();
             const year = result[i].payDate.getFullYear();
-            
-
             newArray[i].payDate = dateFormatter(day, month, year);
 
-            payDateArray = []
-            nextPayDate = result[i].nextPayDate[index];
-            newVariable = dateFormatter(nextPayDate.getDate(), nextPayDate.getMonth() + 1 , nextPayDate.getFullYear());
-            payDateArray.push(newVariable);
             
-            newArray[i].payDateArray = payDateArray;
+
+            
+            
+            
             if(new Date() >= result[i].nextPayDate[index]){
+
+                result[i].nextPayDate.push(addDays(result[i].nextPayDate[index], 15));
+
+                result[i].indexNumber += 1;
+                result[i].nextPayStatus.push("Not Paid");
+                result[i].save();
+
                 let mailOptions = {
                     from: 'ajjmacias@addu.edu.ph', // sender address
                     to: 'aaron.justin.macias@gmail.com', // list of receivers
@@ -74,24 +79,30 @@ app.get('/api', (req, res) =>{
                         return console.log(error);
                     }
                     console.log('Message sent: %s', info.messageId);
-                });
-
-
-                result[i].nextPayDate.push(addDays(result[i].nextPayDate[index], 15));
-                console.log(result[i].nextPayDate);
-
-                result[i].indexNumber += 1
-                result[i].nextPayStatus.push("Not Paid");
-                result[i].save()   
+                });   
             }  
-        }
 
+            payDateArrayVar = []
+            for(j = 0; j < result[i].nextPayDate.length; j++){
+                formatVariable = dateFormatter(result[i].nextPayDate[j].getDate(), result[i].nextPayDate[j].getMonth() + 1 , result[i].nextPayDate[j].getFullYear());
+                payDateArrayVar.push(formatVariable);
+            }
+
+            payStatusArray = [];
+            for(k = 0; k < result[i].nextPayStatus.length; k++){
+                payStatusArray.push(result[i].nextPayStatus[k]);
+            }
+            
+            newArray[i].payDateArray = payDateArrayVar;
+            newArray[i].payStatusArray = payStatusArray;
+
+            newArray[i].latestPayDate = payDateArrayVar[index];
+        }
+     
+    }).then(() => {
         const jsonData = JSON.stringify(newArray);
         res.send(jsonData);
     })
-
-    
-    
 })
 
 app.post('/api', (req, res) => {
