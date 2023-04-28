@@ -9,28 +9,45 @@ function DetailsLoan(){
     let data = location.state.data;
     let statusArray = data.payStatusArray;
     const id = data.id;
+
+    const [payArray, setPayArray] = useState([]);
     
+    useEffect(() => {
+      fetch(`http://localhost:4000/details?id=${id}`)
+      .then(res => {return res.json()})
+      .then(result => {
+        setPayArray(result);
+      })  
+  
+    }, []);
     
-    const [status, setStatus] = useState(statusArray);
+
 
     const handleInputChangeStatus = (event, index) => {
-      const newArray = [...status];
+      const newArray = [...payArray];
       newArray[index] = event.target.value;
-      setStatus(newArray);
-  }
+      setPayArray(newArray);
+      
+
+    }
+
+    const handleFinishLoan = () => {
+      console.log(data);
+    }
 
     const handleSubmit = () =>{
-      console.log(id);
       const url = 'http://localhost:4000/details';
       fetch(url, {
           method: 'POST',
           headers: {
           'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ ID: id, payStatusArray: status})
+          body: JSON.stringify({ ID: id, payStatusArray: payArray})
       })
-      .then(response => response.json())
-      .catch(error => console.error(error))
+      .then(response => {response.json()} )
+      .catch(error => console.error(error));
+      console.log(payArray);
+      
       }
     
 
@@ -38,7 +55,7 @@ function DetailsLoan(){
         <tr key={item.id}>
           <td>{item}</td>
           <td class = {header.selectBox} > 
-            <select id = {header.select} selected = {statusArray[index]} onChange={(event) => handleInputChangeStatus(event, index)}>
+            <select id = {header.select} value = {payArray[index]} onChange={(event) => handleInputChangeStatus(event, index)}>
               <option value="Not Paid">Not Paid</option>
               <option value="Paid">Paid</option>
             </select>
@@ -63,13 +80,14 @@ function DetailsLoan(){
 
         <div className = {header.mainContent}>
           <div className = {header.headers}>
+          <button onClick = {handleFinishLoan}id = {header.finishButton}> Finish Loan</button>
             <div> Name: {data.name} </div>
             <div> Loaned Money: {data.totalLoan} </div>
             <div> Interest Rate: {data.interestRate} </div>
             <div> Starting Date: {data.payDate}</div>
           </div>
 
-          <button id = {header.finishButton}> Finish Loan</button>
+          
           <button onClick={(handleSubmit)}> Save</button>
 
 

@@ -127,12 +127,26 @@ app.post('/loan', (req, res) =>{
 
 })
 
+
+app.get('/details', (req, res) => {
+    id = req.query.id;
+    Loan.findById(id)
+    .then((result) =>{
+        
+        const jsonData = JSON.stringify(result.nextPayStatus);
+        res.send(jsonData);
+        console.log(jsonData)
+
+    })
+})
+
 app.post('/details', (req, res) =>{
     id = req.body.ID;
     newStatusArray = req.body.payStatusArray
     Loan.findById(id)
     .then((result) => {
         result.nextPayStatus = newStatusArray;
+        result.save();
     })
 
 })
