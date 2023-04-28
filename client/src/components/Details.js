@@ -8,20 +8,41 @@ function DetailsLoan(){
     const location = useLocation();
     let data = location.state.data;
     let statusArray = data.payStatusArray;
+    const id = data.id;
     
-    const [status, setStatus] = useState();
+    
+    const [status, setStatus] = useState(statusArray);
 
-    const handleInputChangeStatus = (event) => {
-      setStatus(event.target.value);
+    const handleInputChangeStatus = (event, index) => {
+      const newArray = [...status];
+      newArray[index] = event.target.value;
+      setStatus(newArray);
   }
+
+    const handleSubmit = () =>{
+      console.log(id);
+      const url = 'http://localhost:4000/details';
+      fetch(url, {
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ ID: id, payStatusArray: status})
+      })
+      .then(response => response.json())
+      .catch(error => console.error(error))
+      }
     
+
     const rows = data.payDateArray.map((item, index) => (
         <tr key={item.id}>
           <td>{item}</td>
-          <td class = {header.selectBox} > <select id = {header.select} selected = {statusArray[index]} onChange={handleInputChangeStatus}>
-                  <option value="Not Paid">Not Paid</option>
-                  <option value="Paid">Paid</option>
-                </select></td>
+          <td class = {header.selectBox} > 
+            <select id = {header.select} selected = {statusArray[index]} onChange={(event) => handleInputChangeStatus(event, index)}>
+              <option value="Not Paid">Not Paid</option>
+              <option value="Paid">Paid</option>
+            </select>
+          </td>
           <td> {data.nextPayAmount}</td>
           <td> {index}</td>
         </tr>
@@ -49,6 +70,7 @@ function DetailsLoan(){
           </div>
 
           <button id = {header.finishButton}> Finish Loan</button>
+          <button onClick={(handleSubmit)}> Save</button>
 
 
 
@@ -73,6 +95,6 @@ function DetailsLoan(){
 
 
      );
-}
+  }
  
 export default DetailsLoan;
