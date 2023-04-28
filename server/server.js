@@ -55,11 +55,6 @@ app.get('/api', (req, res) =>{
             const year = result[i].payDate.getFullYear();
             newArray[i].payDate = dateFormatter(day, month, year);
 
-            
-
-            
-            
-            
             if(new Date() >= result[i].nextPayDate[index]){
 
                 result[i].nextPayDate.push(addDays(result[i].nextPayDate[index], 15));
@@ -132,7 +127,15 @@ app.post('/loan', (req, res) =>{
 
 })
 
+app.post('/details', (req, res) =>{
+    id = req.body.ID;
+    newStatusArray = req.body.payStatusArray
+    Loan.findById(id)
+    .then((result) => {
+        result.nextPayStatus = newStatusArray;
+    })
 
+})
 
 function addDays(date, days) {
     var result = new Date(date);
