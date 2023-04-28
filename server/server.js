@@ -55,7 +55,7 @@ app.get('/api', (req, res) =>{
             const year = result[i].payDate.getFullYear();
             newArray[i].payDate = dateFormatter(day, month, year);
 
-            if(new Date() >= result[i].nextPayDate[index]){
+            while(new Date() >= result[i].nextPayDate[index]){
 
                 result[i].nextPayDate.push(addDays(result[i].nextPayDate[index], 15));
 
