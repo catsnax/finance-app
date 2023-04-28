@@ -7,19 +7,36 @@ function DetailsLoan(){
 
     const location = useLocation();
     let data = location.state.data;
-    let statusArray = data.payStatusArray;
     const id = data.id;
+    let dates = data.payDateArray
+    console.log(data);
+
+    const nowDate = new Date();
 
     const [payArray, setPayArray] = useState([]);
+    const [onTime, setOnTime] = useState([]);
+
+  
+      
     
     useEffect(() => {
       fetch(`http://localhost:4000/details?id=${id}`)
       .then(res => {return res.json()})
       .then(result => {
-        setPayArray(result);
-      })  
+        setPayArray(result[0]);
+        dates = result[1];
   
+        dates.map((status, i) => {
+          let compare = new Date(status)
+          if(nowDate < compare){
+            onTime.push("Not Late")
+          }
+          else{onTime.push("Late")}
+        })
+        
+      })  
     }, []);
+
     
 
 
@@ -32,7 +49,8 @@ function DetailsLoan(){
     }
 
     const handleFinishLoan = () => {
-      console.log(data);
+      console.log(onTime);
+
     }
 
     const handleSubmit = () =>{
@@ -61,7 +79,7 @@ function DetailsLoan(){
             </select>
           </td>
           <td> {data.nextPayAmount}</td>
-          <td> {index}</td>
+          <td> {onTime[index]}</td>
         </tr>
       )
     ); 
@@ -88,7 +106,7 @@ function DetailsLoan(){
           </div>
 
           
-          <button onClick={(handleSubmit)}> Save</button>
+          <button id = {header.save} onClick={(handleSubmit)}> Save</button>
 
 
 

@@ -133,7 +133,8 @@ app.get('/details', (req, res) => {
     Loan.findById(id)
     .then((result) =>{
         
-        const jsonData = JSON.stringify(result.nextPayStatus);
+        
+        const jsonData = JSON.stringify([result.nextPayStatus, result.nextPayDate]);
         res.send(jsonData);
         console.log(jsonData)
 
