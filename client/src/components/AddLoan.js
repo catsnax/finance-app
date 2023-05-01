@@ -43,7 +43,7 @@ const AddLoan = () => {
         <div id = {header.body}>
             <div id = {header.FinanceLogo}> FinanceApp</div>
             <div className = {header.sidebarBox}>
-                <Link to = "/Signin" className = {header.sideElement}> Home</Link>
+                <Link to = "/" className = {header.sideElement}> Home</Link>
                 <Link to = "/View" className = {header.sideElement}> View Loans</Link>
                 <div id = {header.Loans} className = {header.sideElement}> Create Loans</div>
                 <div id = "Data" className = {header.sideElement}> Data</div>

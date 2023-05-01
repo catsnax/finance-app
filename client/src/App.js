@@ -10,6 +10,7 @@ import Home from './components/Home';
 function App() {
 
   const [user, newUser] = useState(null);
+  const [account, newAccount]  = useState(null);
 
   
 
@@ -20,8 +21,15 @@ function App() {
       newUser(data);
       console.log("hello");
     })  
-
   });
+
+  useEffect(() => {
+    fetch('http://localhost:4000/account')
+    .then( res => {return res.json})
+    .then( data => {
+      newAccount(data);
+    })
+  })
 
   
 
@@ -29,9 +37,9 @@ function App() {
   return ( 
   <Routes>
 
-    <Route path = "/" element ={<AddLoan/>}/>
+    <Route path = "/Add" element ={<AddLoan/>}/>
     {user && <Route path="/View" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan {...props} />}/>}
-    <Route path = "/Signin" element ={<Home/>}/>
+    {account && <Route path = "/" element ={<Home prop={account}/>}/>}
     <Route path = "/Details" element = {<Details/>}></Route>
   </Routes>
   )

@@ -3,6 +3,7 @@ var nodemailer = require('nodemailer');
 const app = express();
 const mongoose = require('mongoose');
 const Loan = require('./models/loan')
+const Account = require('./models/account');
 const cors = require('cors');
 
 const port = 4000;
@@ -31,8 +32,39 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-app.get("/", (req, res) =>{
+app.post("/home", (req, res) => {
 
+})
+
+
+app.get("/", (req, res) =>{
+    console.log("account made");
+    const account = new Account({
+        totalMoney: 100000,
+        investedMoney: 50000,
+        cashMoney: 50000
+    });
+    account.save()
+    .then((result) =>{
+        console.log(result);
+    })
+    .catch((err) =>{
+        console.log(err);
+    })
+})
+
+app.get('/account', (req, res) =>{
+    let account = new Object();
+    Account.find()
+    .then((result) =>{
+        account.totalMoney = result[0].totalMoney;
+        account.investedMoney = result[0].investedMoney;
+        account.cashMoney = result[0].cashMoney;
+    })
+    .then(() =>{
+        const jsonData = JSON.stringify(account);
+        res.send(jsonData);
+    })
 })
 
 app.get('/api', (req, res) =>{
@@ -131,7 +163,6 @@ app.post('/loan', (req, res) =>{
     })
 
 })
-
 
 app.get('/details', (req, res) => {
     id = req.query.id;

@@ -11,15 +11,18 @@ const Home = () => {
         <div id = {header.FinanceLogo}> FinanceApp</div>
         <div className = {header.sidebarBox}>
         
-            <Link to = "/Signin" className = {header.sideElement}> Home</Link>
-            <div id = {header.view}className = {header.sideElement}> View Loans</div>
-            <Link to = "/" id = {header.Loans} className = {header.sideElement}> Create Loans</Link>
+
+            <div id = {header.view}className = {header.sideElement}> Home</div>
+            <Link to = "/View" className = {header.sideElement}> View Loans</Link>
+            
+            <Link to = "/Add" id = {header.Loans} className = {header.sideElement}> Create Loans</Link>
             <div id = "Data" className = {header.sideElement}> Data</div>
         </div>
 
         <form>
         <div id = {header.mainContent}>
-        <input id = {header.input}/> <button> ADD MONEY</button>
+        <button class = {header.button}> ADD MONEY</button><br></br>
+        <button class = {header.button}> ADD EXPENSE</button>
 
         <h2> General Finances</h2>
 
