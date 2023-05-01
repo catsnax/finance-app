@@ -36,6 +36,7 @@ app.get("/", (req, res) =>{
 })
 
 app.get('/api', (req, res) =>{
+    console.log("accessed");
     Loan.find()
     .then((result) =>{
         newArray = []
@@ -55,9 +56,12 @@ app.get('/api', (req, res) =>{
             const year = result[i].payDate.getFullYear();
             newArray[i].payDate = dateFormatter(day, month, year);
 
-            while(new Date() >= result[i].nextPayDate[index]){
+            let dateCounter = result[i].nextPayDate[index];
+
+            while(new Date() >= dateCounter){
 
                 result[i].nextPayDate.push(addDays(result[i].nextPayDate[index], 15));
+                dateCounter = addDays(dateCounter, 15);
 
                 result[i].indexNumber += 1;
                 result[i].nextPayStatus.push("Not Paid");
@@ -93,8 +97,9 @@ app.get('/api', (req, res) =>{
 
             newArray[i].latestPayDate = payDateArrayVar[index];
         }
-     
-    }).then(() => {
+    })
+    .then(() => {
+        console.log("hello");
         const jsonData = JSON.stringify(newArray);
         res.send(jsonData);
     })

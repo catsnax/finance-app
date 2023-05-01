@@ -17,16 +17,19 @@ function App() {
     .then(res => {return res.json()})
     .then(data => {
       newUser(data);
+      console.log("hello");
     })  
 
   }, []);
 
+  
 
   
   return ( 
   <Routes>
-    {user && <Route path="/view" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan {...props} />}/>}
+
     <Route path = "/" element ={<AddLoan/>}/>
+    {user && <Route path="/View" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan {...props} />}/>}
     <Route path = "/Signin" element ={<Signin/>}/>
     <Route path = "/Details" element = {<Details/>}></Route>
   </Routes>

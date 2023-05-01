@@ -7,6 +7,7 @@ function ViewLoan(props) {
 
     const navigate = useNavigate();
     const realData = props.prop;
+    console.log("hello");
 
 
     const handleClick = (wow) => {
@@ -48,9 +49,7 @@ return (
           <th>Interest Rate</th>
           <th>Starting Date</th>
           <th>Next Pay</th>
-          <th> Next Pay Date
-            
-          </th>
+          <th> Next Pay Date</th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>

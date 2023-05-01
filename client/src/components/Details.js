@@ -25,16 +25,20 @@ function DetailsLoan(){
       .then(result => {
         setPayArray(result[0]);
         dates = result[1];
-  
+     
         dates.map((status, i) => {
+          console.log();
           let compare = new Date(status)
-          if(nowDate < compare){
-            onTime.push("Not Late")
+          if(result[0][i] == "Paid"){
+            onTime.push("Already Paid")
+          }
+          else if(nowDate < compare){
+            onTime.push("Pending")
           }
           else{onTime.push("Late")}
         })
+    })
         
-      })  
     }, []);
 
     
@@ -64,7 +68,7 @@ function DetailsLoan(){
       })
       .then(response => {response.json()} )
       .catch(error => console.error(error));
-      console.log(payArray);
+      alert("Changes are saved!")
       
       }
     
