@@ -5,6 +5,7 @@ import Signup from './components/Signup';
 import Details from './components/Details';
 import AddLoan from './components/AddLoan';
 import ViewLoan from './components/ViewLoan';
+import Home from './components/Home';
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
 
     <Route path = "/" element ={<AddLoan/>}/>
     {user && <Route path="/View" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan {...props} />}/>}
-    <Route path = "/Signin" element ={<Signin/>}/>
+    <Route path = "/Signin" element ={<Home/>}/>
     <Route path = "/Details" element = {<Details/>}></Route>
   </Routes>
   )
