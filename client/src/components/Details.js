@@ -53,8 +53,22 @@ function DetailsLoan(){
     }
 
     const handleFinishLoan = () => {
-      console.log(onTime);
+      
+    if(window.confirm("Are you sure this is finished?") == true){
+      const url = 'http://localhost:4000/details';
+      fetch(url, {
+          method: 'DELETE',
+          headers: {
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ ID: id})
+      })
+      .then(() =>{
+        window.location.replace('/view');
+      })
+    }
 
+      
     }
 
     const handleSubmit = () =>{
@@ -102,16 +116,15 @@ function DetailsLoan(){
 
         <div className = {header.mainContent}>
           <div className = {header.headers}>
-          <button onClick = {handleFinishLoan}id = {header.finishButton}> Finish Loan</button>
+          
             <div> Name: {data.name} </div>
             <div> Loaned Money: {data.totalLoan} </div>
             <div> Interest Rate: {data.interestRate} </div>
             <div> Starting Date: {data.payDate}</div>
           </div>
 
-          
           <button id = {header.save} onClick={(handleSubmit)}> Save</button>
-
+          <button onClick = {handleFinishLoan}id = {header.finishButton}> Finish Loan</button>
 
 
           <div className = {header.realTable}>

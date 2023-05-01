@@ -157,6 +157,18 @@ app.post('/details', (req, res) =>{
 
 })
 
+app.delete('/details', (req, res) =>{
+    id = req.body.ID;
+    try {
+        const result = Loan.deleteOne({ _id: id }).then(() =>{
+            res.send(result);
+        }) 
+      } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+      }
+})
+
 function addDays(date, days) {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
