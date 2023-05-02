@@ -22,13 +22,6 @@ function App() {
     })  
   }, );
 
-  /*useEffect(() => {
-    fetch('http://localhost:4000/account')
-    .then( res => {return res.json})
-    .then( data => {
-      newAccount(data);
-    })
-  }, )*/
 
   
 

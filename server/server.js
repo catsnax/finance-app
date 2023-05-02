@@ -55,16 +55,27 @@ app.get("/", (req, res) =>{
 
 app.get('/account', (req, res) =>{
     let account = new Object();
+    let total = 0;
     Account.find()
     .then((result) =>{
+        Loan.find()
+        .then((loans) => {
+            loans.map(loan =>{total+= parseInt(loan.totalLoan)})
+            result[0].investedMoney = total;
+            result[0].save();
+        })
         account.totalMoney = result[0].totalMoney;
-        account.investedMoney = result[0].investedMoney;
         account.cashMoney = result[0].cashMoney;
+        account.investedMoney = result[0].investedMoney
+        
     })
     .then(() =>{
+        
         const jsonData = JSON.stringify(account);
         res.send(jsonData);
     })
+
+    
 })
 
 app.post('/reset', (req, res) => {
