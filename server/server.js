@@ -67,6 +67,17 @@ app.get('/account', (req, res) =>{
     })
 })
 
+app.post('/reset', (req, res) => {
+    let money = req.body.totalMoney;
+    console.log("post request made");
+    Account.find()
+    .then((result) =>{
+        result[0].totalMoney = money;
+        result[0].save();
+        
+    })
+})
+
 app.get('/api', (req, res) =>{
     console.log("accessed");
     Loan.find()

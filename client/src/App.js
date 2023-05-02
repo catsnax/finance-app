@@ -21,7 +21,7 @@ function App() {
       newUser(data);
       console.log("hello");
     })  
-  });
+  }, []);
 
   useEffect(() => {
     fetch('http://localhost:4000/account')
@@ -29,7 +29,7 @@ function App() {
     .then( data => {
       newAccount(data);
     })
-  })
+  }, [])
 
   
 
