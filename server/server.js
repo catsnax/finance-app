@@ -78,8 +78,18 @@ app.post('/reset', (req, res) => {
     })
 })
 
+app.post('/add', (req, res) => {
+    console.log("post request made");
+    let addedMoney = parseInt(req.body.money);
+    Account.find()
+    .then((result) => {
+        result[0].totalMoney = parseInt(result[0].totalMoney);
+        result[0].totalMoney += addedMoney;
+        result[0].save();
+    })
+})
+
 app.get('/api', (req, res) =>{
-    console.log("accessed");
     Loan.find()
     .then((result) =>{
         newArray = []
@@ -142,7 +152,6 @@ app.get('/api', (req, res) =>{
         }
     })
     .then(() => {
-        console.log("hello");
         const jsonData = JSON.stringify(newArray);
         res.send(jsonData);
     })

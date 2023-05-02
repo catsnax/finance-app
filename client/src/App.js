@@ -19,17 +19,16 @@ function App() {
     .then(res => {return res.json()})
     .then(data => {
       newUser(data);
-      console.log("hello");
     })  
-  }, []);
+  }, );
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch('http://localhost:4000/account')
     .then( res => {return res.json})
     .then( data => {
       newAccount(data);
     })
-  }, [])
+  }, )*/
 
   
 
@@ -39,7 +38,7 @@ function App() {
 
     <Route path = "/Add" element ={<AddLoan/>}/>
     {user && <Route path="/View" element={<ViewLoan prop={user} />} render={(props) => <ViewLoan {...props} />}/>}
-    {account && <Route path = "/" element ={<Home prop={account}/>}/>}
+    <Route path = "/" element ={<Home/>}></Route>
     <Route path = "/Details" element = {<Details/>}></Route>
   </Routes>
   )

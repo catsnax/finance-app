@@ -16,9 +16,6 @@ function DetailsLoan(){
     const [payArray, setPayArray] = useState([]);
     const [onTime, setOnTime] = useState([]);
 
-  
-      
-    
     useEffect(() => {
       fetch(`http://localhost:4000/details?id=${id}`)
       .then(res => {return res.json()})
