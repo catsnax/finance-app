@@ -42,7 +42,8 @@ app.get("/", (req, res) =>{
     const account = new Account({
         totalMoney: 100000,
         investedMoney: 50000,
-        cashMoney: 50000
+        cashMoney: 50000,
+        totalExpenses: 0,
     });
     account.save()
     .then((result) =>{
@@ -65,8 +66,12 @@ app.get('/account', (req, res) =>{
             result[0].save();
         })
         account.totalMoney = result[0].totalMoney;
+        account.investedMoney = result[0].investedMoney;
+        account.totalExpenses = result[0].totalExpenses;
+
+        let liquid = parseInt(account.totalMoney) - parseInt(account.investedMoney);
+        result[0].cashMoney = liquid;
         account.cashMoney = result[0].cashMoney;
-        account.investedMoney = result[0].investedMoney
         
     })
     .then(() =>{
@@ -100,6 +105,19 @@ app.post('/add', (req, res) => {
     })
 })
 
+app.post('/expense', (req, res) => {
+    inputExpense = parseInt(req.body.expense)
+    Account.find()
+    .then((result) =>{
+        result[0].totalMoney = parseInt(result[0].totalMoney);
+        result[0].totalMoney -= inputExpense;
+
+        result[0].totalExpenses = parseInt(result[0].totalExpenses);
+        result[0].totalExpenses += inputExpense;
+        result[0].save();
+    })
+})
+
 app.get('/api', (req, res) =>{
     Loan.find()
     .then((result) =>{
@@ -128,14 +146,15 @@ app.get('/api', (req, res) =>{
                 dateCounter = addDays(dateCounter, 15);
 
                 result[i].indexNumber += 1;
+                index = result[i].indexNumber; 
                 result[i].nextPayStatus.push("Not Paid");
-                result[i].save();
+                
 
                 let mailOptions = {
                     from: 'ajjmacias@addu.edu.ph', // sender address
                     to: 'aaron.justin.macias@gmail.com', // list of receivers
                     subject: 'Loan Due ✔', // Subject line
-                    text: `${result[i].name}'s interest payment of ${newArray[i].nextPayAmount} is due on ${dateFormatter(result[i].nextPayDate[index].getDate(), result[i].nextPayDate[index].getMonth() + 1 , result[i].nextPayDate[index].getFullYear())} ` // plain text body
+                    text: `${newArray[i].name}'s interest payment of ${newArray[i].nextPayAmount} is due on ${dateFormatter(result[i].nextPayDate[index].getDate(), result[i].nextPayDate[index].getMonth() + 1 , result[i].nextPayDate[index].getFullYear())} ` // plain text body
                 };
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
@@ -143,8 +162,10 @@ app.get('/api', (req, res) =>{
                     }
                     console.log('Message sent: %s', info.messageId);
                 });   
+
             }  
 
+            
             payDateArrayVar = []
             for(j = 0; j < result[i].nextPayDate.length; j++){
                 formatVariable = dateFormatter(result[i].nextPayDate[j].getDate(), result[i].nextPayDate[j].getMonth() + 1 , result[i].nextPayDate[j].getFullYear());
@@ -160,6 +181,7 @@ app.get('/api', (req, res) =>{
             newArray[i].payStatusArray = payStatusArray;
 
             newArray[i].latestPayDate = payDateArrayVar[index];
+            result[i].save()
         }
     })
     .then(() => {

@@ -20,6 +20,7 @@ const Home = () => {
             setTotal(account.totalMoney);
             setInvested(account.investedMoney);
             setLiquid(account.cashMoney);
+            setExpenses(account.totalExpenses)
         })
       }, );
     
@@ -29,6 +30,7 @@ const Home = () => {
     const [total, setTotal] = useState(null);
     const [invested, setInvested] = useState(null);
     const [liquid, setLiquid] = useState(null);
+    const [expenses, setExpenses] = useState(null);
 
 
 
@@ -49,6 +51,7 @@ const Home = () => {
 
     const handleAdd = () =>{
         let addedMoney = window.prompt("Enter Add Money");
+        
         const url = "http://localhost:4000/add";
         fetch(url, {
             method: 'POST',
@@ -56,6 +59,21 @@ const Home = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({money: addedMoney})
+        })
+        .then(response => response.json)
+        .catch((err) => console.log(err));
+    }
+
+    const handleExpense = () =>{
+        let inputExpense = window.prompt("Enter Expense");
+        
+        const url = "http://localhost:4000/expense";
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({expense: inputExpense})
         })
         .then(response => response.json)
         .catch((err) => console.log(err));
@@ -78,7 +96,7 @@ const Home = () => {
         
         <div id = {header.mainContent}>
         <button onClick = {handleAdd} class = {header.button}> ADD MONEY</button><br></br>
-        <button class = {header.button}> ADD EXPENSE</button> <br></br>
+        <button onClick = {handleExpense} class = {header.button}> ADD EXPENSE</button> <br></br>
         <button onClick = {handleReset} class = {header.button}> RESET TOTAL MONEY</button>
 
         <h2> General Finances</h2>
@@ -88,6 +106,8 @@ const Home = () => {
         <div> INVESTED MONEY ₱{invested}</div>
 
         <div> LIQUIDATED CASH ₱{liquid}</div>
+
+        <div> TOTAL EXPENSES ₱{expenses}</div>
 
         </div>
 
