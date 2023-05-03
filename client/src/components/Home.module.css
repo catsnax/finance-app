@@ -12,6 +12,29 @@
     margin-top: 1rem;
 }
 
+.money{
+    font-size: 1.3rem;
+    padding-left: 3rem;
+}
+
+.financeHeader{
+    margin-top: 2rem;
+    font-family: 'Rubik', serif;
+    font-size: 1.3rem;
+    padding-left: 3rem;
+    color: rgb(24, 19, 19);
+}
+
+#container{
+    width: 30rem;
+    height: 20rem;
+    align-self: center;
+    border: solid;
+    margin-left: 21rem;
+    text-align: left;
+    display: flex;
+}
+
 #FinanceLogo{
     color: #003566;
     font-family: 'Kaisei Opti', serif;

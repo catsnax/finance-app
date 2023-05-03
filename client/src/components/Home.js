@@ -9,6 +9,12 @@ const Home = () => {
 
     const [account, newAccount]  = useState(null);
 
+    const [total, setTotal] = useState(null);
+    const [invested, setInvested] = useState(null);
+    const [liquid, setLiquid] = useState(null);
+    const [expenses, setExpenses] = useState(null);
+    const [month, setMonth] = useState(null);
+
 
     useEffect(() => {
         fetch('http://localhost:4000/account')
@@ -17,20 +23,18 @@ const Home = () => {
           newAccount(data);
         })  
         .then(() =>{
-            setTotal(account.totalMoney);
-            setInvested(account.investedMoney);
-            setLiquid(account.cashMoney);
-            setExpenses(account.totalExpenses)
+            setTotal(account.totalMoney.toLocaleString("en-US"));
+            setInvested(account.investedMoney.toLocaleString("en-US"));
+            setLiquid(account.cashMoney.toLocaleString("en-US"));
+            setExpenses(account.totalExpenses.toLocaleString("en-US"));
+            setMonth(account.dateMonth);
         })
       }, );
     
 
 
 
-    const [total, setTotal] = useState(null);
-    const [invested, setInvested] = useState(null);
-    const [liquid, setLiquid] = useState(null);
-    const [expenses, setExpenses] = useState(null);
+    
 
 
 
@@ -101,13 +105,28 @@ const Home = () => {
 
         <h2> General Finances</h2>
 
-        <div> TOTAL MONEY ₱{total}</div>
+        <div id = {header.container}>
 
-        <div> INVESTED MONEY ₱{invested}</div>
+            <div>
+                <div class = {header.financeHeader}> TOTAL MONEY</div>
+                <div class = {header.money}> ₱{total}</div>
 
-        <div> LIQUIDATED CASH ₱{liquid}</div>
+                <div class = {header.financeHeader}> INVESTED MONEY </div>
+                <div class = {header.money}> ₱{invested} </div>
 
-        <div> TOTAL EXPENSES ₱{expenses}</div>
+                <div class = {header.financeHeader}> LIQUIDATED CASH </div>
+                <div class = {header.money}> ₱{liquid}</div>
+
+            </div>
+
+            <div> 
+
+                <div class = {header.financeHeader}> TOTAL EXPENSES {month} </div>
+                <div class = {header.money}>₱{expenses}</div>
+            </div>
+
+        </div>
+
 
         </div>
 

@@ -44,6 +44,7 @@ app.get("/", (req, res) =>{
         investedMoney: 50000,
         cashMoney: 50000,
         totalExpenses: 0,
+        dateMonth: new Date().getMonth(),
     });
     account.save()
     .then((result) =>{
@@ -57,6 +58,9 @@ app.get("/", (req, res) =>{
 app.get('/account', (req, res) =>{
     let account = new Object();
     let total = 0;
+    let todayDate = new Date().getMonth();
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
     Account.find()
     .then((result) =>{
         Loan.find()
@@ -69,9 +73,14 @@ app.get('/account', (req, res) =>{
         account.investedMoney = result[0].investedMoney;
         account.totalExpenses = result[0].totalExpenses;
 
+        if(todayDate > result[0].dateMonth) {result[0].dateMonth++};
+        account.dateMonth = months[result[0].dateMonth];        
+
+
         let liquid = parseInt(account.totalMoney) - parseInt(account.investedMoney);
         result[0].cashMoney = liquid;
         account.cashMoney = result[0].cashMoney;
+
         
     })
     .then(() =>{

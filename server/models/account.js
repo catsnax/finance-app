@@ -7,6 +7,7 @@ const accountSchema = new Schema({
     cashMoney: Number,
     totalExpenses: Number,
     arrayExpenses: Array,
+    dateMonth: Number,
 });
 
 const account = mongoose.model('account', accountSchema);
