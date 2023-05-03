@@ -60,39 +60,46 @@ app.get('/account', (req, res) =>{
     let total = 0;
     let todayDate = new Date().getMonth();
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-
+    account.totalMoney = 0
     Account.find()
     .then((result) =>{
+        
         Loan.find()
         .then((loans) => {
-            loans.map(loan =>{total+= parseInt(loan.totalLoan)})
+            
+            loans.map(loan =>{
+                account.totalMoney += loan.totalInterest;
+                total+= parseInt(loan.totalLoan);
+                
+            })
+            account.totalMoney += result[0].totalMoney;
             result[0].investedMoney = total;
 
+            if(todayDate > result[0].dateMonth) {
+                result[0].dateMonth++;
+                result[0].totalExpenses = 0;
+            }
+
+            result[0].save();
         })
 
-        if(todayDate > result[0].dateMonth) {
-            result[0].dateMonth++;
-            result[0].totalExpenses = 0;
-        }
+        .then(() => {
+                
+            account.dateMonth = months[result[0].dateMonth];
             
-        account.dateMonth = months[result[0].dateMonth]; 
-
-        account.totalMoney = result[0].totalMoney;
-        account.investedMoney = result[0].investedMoney;
-        account.totalExpenses = result[0].totalExpenses;
-
-
-        //liquidated cash is calculated from subtracting total money and invested money
-        result[0].cashMoney = parseInt(account.totalMoney) - parseInt(account.investedMoney);
-        account.cashMoney = result[0].cashMoney;
-
-        result[0].save();
+            //liquidated cash is calculated from subtracting total money and invested money
+            result[0].cashMoney = parseInt(result[0].totalMoney) - parseInt(result[0].investedMoney);
+            account.cashMoney = result[0].cashMoney;
+            
+            account.investedMoney = result[0].investedMoney;
+            account.totalExpenses = result[0].totalExpenses;
+        }) 
+        .then(() =>{
+            const jsonData = JSON.stringify(account);
+            res.send(jsonData);
+        })
     })
-    .then(() =>{
-        
-        const jsonData = JSON.stringify(account);
-        res.send(jsonData);
-    })
+    
 
     
 })

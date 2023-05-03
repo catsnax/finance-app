@@ -21,6 +21,7 @@ const Home = () => {
         .then(res => {return res.json()})
         .then(data => {
           newAccount(data);
+
         })  
         .then(() =>{
             setTotal(account.totalMoney.toLocaleString("en-US"));
@@ -29,7 +30,7 @@ const Home = () => {
             setExpenses(account.totalExpenses.toLocaleString("en-US"));
             setMonth(account.dateMonth);
         })
-      }, );
+      }, [account]);
     
 
 
