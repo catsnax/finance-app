@@ -8,13 +8,17 @@ function DetailsLoan(){
     const location = useLocation();
     let data = location.state.data;
     const id = data.id;
-    let dates = data.payDateArray
+    let nextPayAmount = data.nextPayAmount;
+
     console.log(data);
+
+    let dates = data.payDateArray
 
     const nowDate = new Date();
 
     const [payArray, setPayArray] = useState([]);
     const [onTime, setOnTime] = useState([]);
+    let [totalInterest, setTotalInterest] = useState(0);
 
     useEffect(() => {
       fetch(`http://localhost:4000/details?id=${id}`)
@@ -22,6 +26,13 @@ function DetailsLoan(){
       .then(result => {
         setPayArray(result[0]);
         dates = result[1];
+
+        result[0].map(status => {
+          console.log(status);
+          if(status == 'Paid'){
+            setTotalInterest(totalInterest += nextPayAmount);
+          }
+        })
      
         dates.map((status, i) => {
           console.log();
@@ -116,6 +127,7 @@ function DetailsLoan(){
           
             <div> Name: {data.name} </div>
             <div> Loaned Money: {data.totalLoan} </div>
+            <div> Total Interest Gained: ₱{totalInterest}</div>
             <div> Interest Rate: {data.interestRate} </div>
             <div> Starting Date: {data.payDate}</div>
           </div>

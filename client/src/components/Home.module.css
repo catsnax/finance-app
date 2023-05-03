@@ -14,25 +14,26 @@
 
 .money{
     font-size: 1.3rem;
-    padding-left: 3rem;
+    padding-left: 3.5rem;
 }
 
 .financeHeader{
     margin-top: 2rem;
     font-family: 'Rubik', serif;
     font-size: 1.3rem;
-    padding-left: 3rem;
+    padding-left: 3.5rem;
     color: rgb(24, 19, 19);
 }
 
 #container{
-    width: 30rem;
+    width: 38rem;
     height: 20rem;
     align-self: center;
     border: solid;
-    margin-left: 21rem;
+    margin-left: 18rem;
     text-align: left;
     display: flex;
+    gap: 3rem;
 }
 
 #FinanceLogo{

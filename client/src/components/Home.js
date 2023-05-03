@@ -121,7 +121,7 @@ const Home = () => {
 
             <div> 
 
-                <div class = {header.financeHeader}> TOTAL EXPENSES {month} </div>
+                <div class = {header.financeHeader}> TOTAL EXPENSES ({month}) </div>
                 <div class = {header.money}>₱{expenses}</div>
             </div>
 

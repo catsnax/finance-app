@@ -67,21 +67,26 @@ app.get('/account', (req, res) =>{
         .then((loans) => {
             loans.map(loan =>{total+= parseInt(loan.totalLoan)})
             result[0].investedMoney = total;
-            result[0].save();
+
         })
+
+        if(todayDate > result[0].dateMonth) {
+            result[0].dateMonth++;
+            result[0].totalExpenses = 0;
+        }
+            
+        account.dateMonth = months[result[0].dateMonth]; 
+
         account.totalMoney = result[0].totalMoney;
         account.investedMoney = result[0].investedMoney;
         account.totalExpenses = result[0].totalExpenses;
 
-        if(todayDate > result[0].dateMonth) {result[0].dateMonth++};
-        account.dateMonth = months[result[0].dateMonth];        
 
-
-        let liquid = parseInt(account.totalMoney) - parseInt(account.investedMoney);
-        result[0].cashMoney = liquid;
+        //liquidated cash is calculated from subtracting total money and invested money
+        result[0].cashMoney = parseInt(account.totalMoney) - parseInt(account.investedMoney);
         account.cashMoney = result[0].cashMoney;
 
-        
+        result[0].save();
     })
     .then(() =>{
         
@@ -137,7 +142,7 @@ app.get('/api', (req, res) =>{
             newArray[i].name = result[i].name;
             newArray[i].totalLoan = `₱${result[i].totalLoan}`;
             newArray[i].interestRate = `${parseInt(result[i].interestRate * 100)}%`;
-            newArray[i].nextPayAmount = `₱${parseInt(result[i].totalLoan * result[i].interestRate)}`;
+            newArray[i].nextPayAmount = parseInt(result[i].totalLoan * result[i].interestRate);
             //date formatter
         
             index = result[i].indexNumber;
@@ -214,6 +219,7 @@ app.post('/loan', (req, res) =>{
         nextPayStatus: ["Not Paid"],
         interestAmount: parseFloat(req.body.Interest) * req.body.Amount,
         indexNumber: 0,
+        totalInterest: 0,
     })
 
     loan.save()
@@ -245,6 +251,12 @@ app.post('/details', (req, res) =>{
     Loan.findById(id)
     .then((result) => {
         result.nextPayStatus = newStatusArray;
+        result.nextPayStatus.map(status =>{
+            if(status == "Paid"){
+                result.totalInterest += result.interestAmount
+            }
+        })
+
         result.save();
     })
 

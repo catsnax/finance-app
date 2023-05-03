@@ -11,6 +11,7 @@ const loanSchema = new Schema({
     indexNumber: Number,
     nextPayStatus: Array,
     interestAmount: Number,
+    totalInterest: Number,
 }, {timestamps: true});
 
 const Loan = mongoose.model('Loan', loanSchema);
